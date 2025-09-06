@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int gcdOfOddEvenSums(int n) {
+
+        int odd = 0;
+        int num = 1;
+        int oddSum = 0;
+        while(odd<n){
+            if(num%2!=0){
+                oddSum+=num;
+                odd++;
+            }
+            num++;
+        }
+        
+        num = 1;
+        int even = 0;
+        int evenSum = 0;
+        while(even<n){
+            if(num%2==0){
+                evenSum+=num;
+                even++;
+            }
+            num++;
+        }
+
+        return gcd(oddSum,evenSum);
+    }
+};
