@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> sumZero(int n) {
+        vector<int> ans;
+        int idx;
+        if(n%2!=0) idx = 0;
+        else idx = 1;
+
+        while(n>0){
+            if(idx == 0){
+                ans.push_back(idx);
+                idx++;
+                n--;
+                continue;
+            }
+            ans.push_back(idx);
+            ans.push_back(-idx);
+            n-=2;
+            idx++;
+        }
+        return ans;
+    }
+};
