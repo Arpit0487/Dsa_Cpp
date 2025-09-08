@@ -1,0 +1,26 @@
+class Solution {
+public:
+    double minimumAverage(vector<int>& nums) {
+        vector<double> averages;
+        int m = nums.size() / 2;
+
+        while (m > 0) {
+            sort(nums.begin(), nums.end());
+            double mini = nums.front();
+            double maxi = nums.back();
+            nums.erase(nums.begin());
+            nums.pop_back();
+            averages.push_back((mini + maxi) / 2);
+            m--;
+        }
+
+        double minAvg = averages[0];
+        for (int i = 1; i < averages.size(); i++) {
+            if (averages[i] < minAvg) {
+                minAvg = averages[i];
+            }
+        }
+
+        return minAvg;
+    }
+};
