@@ -1,0 +1,17 @@
+class Solution {
+public:
+    long long maxArrayValue(vector<int>& nums) {
+        if (nums.size() == 1)
+            return nums[0];
+
+        vector<long long> arr(nums.begin(), nums.end());
+
+        for (int n = arr.size() - 1; n > 0; n--) {
+            if (arr[n] >= arr[n - 1]) {
+                arr[n - 1] += arr[n];
+            }
+        }
+
+        return *max_element(arr.begin(), arr.end());
+    }
+};
