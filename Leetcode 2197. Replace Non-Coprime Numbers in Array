@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<int> replaceNonCoprimes(vector<int>& nums) {
+        vector<int> ans;
+        for(int i=0; i<nums.size(); i++){
+            ans.push_back(nums[i]);
+            while(ans.size()>1){
+                int x = ans[ans.size()-1];
+                int y = ans[ans.size()-2];
+                if(gcd(x,y)>1){
+                    ans.pop_back();
+                    ans.pop_back();
+                    long long LCM = (long long)x / gcd(x,y) * y;
+                    ans.push_back((int) LCM);
+                }
+                else break;
+            }
+        }
+        return ans;
+    }
+};
