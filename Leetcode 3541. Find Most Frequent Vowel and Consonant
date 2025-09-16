@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int maxFreqSum(string s) {
+        unordered_map<char,int> vowels;
+        unordered_map<char,int> consos;
+        for(auto x : s){
+            if(x=='a' || x=='e' || x=='i' || x=='o' || x=='u'){
+                vowels[x]++;
+            }
+            else consos[x]++;
+        }
+
+        int maxVow = INT_MIN;
+        bool flag1 = false;
+        for(auto x : vowels){
+            if(x.second>maxVow){
+                maxVow = x.second;
+                flag1 = true;
+            }
+        }
+
+        int maxconso = INT_MIN;
+        bool flag2 = false;
+        for(auto x : consos){
+            if(x.second>maxconso){
+                maxconso = x.second;
+                flag2 = true;
+            }
+        }
+        if(flag1==false && flag2==true) return maxconso;
+        if(flag1==true && flag2==false) return maxVow;
+        return maxVow+maxconso;
+    }
+};
