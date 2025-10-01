@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int numWaterBottles(int numBottles, int numExchange) {
+        int count = 0;
+        count += numBottles;
+        int emptyCount = numBottles;
+
+        while (emptyCount >= numExchange) {
+            int prev = emptyCount;
+            int newBottles = emptyCount / numExchange;
+            emptyCount = newBottles + (prev % numExchange);
+            count += newBottles;
+        }
+
+        return count;
+    }
+};
