@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int getDigit(const string &num, int index) {
+        if (index < 0) return 0;
+        return num[index] - '0';
+    }
+
+    string addStrings(string num1, string num2) {
+        string result = "";
+        int carry = 0;
+        int i = num1.size() - 1;
+        int j = num2.size() - 1;
+
+        while (i >= 0 || j >= 0 || carry) {
+            int sum = getDigit(num1, i) + getDigit(num2, j) + carry;
+            carry = sum / 10;
+            result += (sum % 10) + '0';
+            i--;
+            j--;
+        }
+
+        reverse(result.begin(), result.end());
+        return result;
+    }
+};
