@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int totalMoney(int n) {
+        int sum = 0;
+        while (n--) {
+            int curr = 1;
+            curr += n / 7;
+            curr += n % 7;
+            sum+=curr;
+        }
+        return sum;
+    }
+};
