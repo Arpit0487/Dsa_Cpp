@@ -1,0 +1,17 @@
+class Solution {
+public:
+    
+    int solve(TreeNode* root,int maxi){
+        if (root){
+            int k=solve(root->left, max(maxi,root->val)) + solve(root->right, max(maxi,root->val));
+            if (root->val>=maxi){
+                k++;
+            }
+            return k;
+        }
+        return 0;
+    }
+    int goodNodes(TreeNode* root) {
+        return solve(root,-10001);
+    }
+};
