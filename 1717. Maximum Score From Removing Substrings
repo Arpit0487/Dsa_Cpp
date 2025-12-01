@@ -1,0 +1,74 @@
+class Solution {
+public:
+    int maximumGain(string s, int x, int y) {
+        if(x<y){
+            //ba check karna hai
+            string s1 = s;
+            stack<char> st1;
+            int count = 0;
+            int n = s1.length();
+            for(int i=0; i<n; i++){
+                if(st1.empty()) st1.push(s1[i]);
+                else if(st1.top()=='b' && s1[i]=='a'){
+                    st1.pop();
+                    count += y;
+                }
+                else{
+                    st1.push(s1[i]);
+                }
+            }
+
+            stack<char> st2;
+            while(!st1.empty()){
+                char t = st1.top();
+                st1.pop();
+                if(st2.empty()) st2.push(t);
+                else if(st2.top()=='b' && t=='a'){
+                    count+=x;
+                    st2.pop();
+                }
+                else{
+                    st2.push(t);
+                }
+            }
+
+            return count;
+        }
+
+        else if(x>=y){
+            //check karenge pehle ab
+            string s1 = s;
+            stack<char> st1;
+            int count = 0;
+            int n = s1.length();
+            for(int i=0; i<n; i++){
+                if(st1.empty()) st1.push(s1[i]);
+                else if(st1.top()=='a' && s1[i]=='b'){
+                    st1.pop();
+                    count += x;
+                }
+                else{
+                    st1.push(s1[i]);
+                }
+            }
+
+            stack<char> st2;
+            while(!st1.empty()){
+                char t = st1.top();
+                st1.pop();
+                if(st2.empty()) st2.push(t);
+                else if(st2.top()=='a' && t=='b'){
+                    count+=y;
+                    st2.pop();
+                }
+                else{
+                    st2.push(t);
+                }
+            }
+
+            return count;
+        }
+
+        return 0;
+    }
+};
