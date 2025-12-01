@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int countDigits(int num) {
+        int k = num;
+        int count = 0;
+        while(k){
+            int x = k%10;
+            k /= 10;
+            if(num%x==0) count++;
+        }
+        return count;
+    }
+};
