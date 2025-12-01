@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool isHappy(int n) {
+        unordered_map<int,int> mp;
+        while(n!=1){
+            int k = n;
+            int sum = 0;
+            while(k){
+                int x = k%10;
+                sum += (x*x);
+                k/=10;
+            }
+            mp[sum]++;
+            n=sum;
+            if(mp[sum]>=2) return false;
+        }
+        return true;
+    }
+};
