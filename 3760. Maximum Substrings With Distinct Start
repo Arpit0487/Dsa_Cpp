@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int maxDistinct(string s) {
+        unordered_set<char> st;
+        int count = 0;
+        for(auto x : s){
+            if(st.find(x)==st.end()){
+                count++;
+                st.insert(x);
+            }
+        }
+        return count;
+    }
+};
