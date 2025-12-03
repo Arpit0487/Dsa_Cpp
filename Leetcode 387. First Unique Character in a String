@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        stack<pair<char, int>> st;
+        unordered_map<char,int> mp;
+
+        for (char c : s) mp[c]++;
+
+        for(int i=s.length()-1; i>=0; i--){
+            char ch = s[i];
+            int freq = mp[s[i]];
+            st.push({ch,freq});
+        }
+
+        while(!st.empty()){
+            if(st.top().second == 1) return s.find(st.top().first);
+            st.pop();
+        }
+        return -1;
+    }
+};
