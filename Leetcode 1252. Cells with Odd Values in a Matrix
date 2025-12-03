@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int oddCells(int m, int n, vector<vector<int>>& indices) {
+        
+        //create 2D matrix m*n
+        vector<vector<int>> mat(m,vector<int>(n,0));
+
+        //traverse indices
+        for(int i=0; i<indices.size(); i++){
+
+            //indicies[i][0] row change
+            int row = indices[i][0];
+            for(int j=0; j<n; j++){
+                mat[row][j] += 1;
+            }
+
+            //indicies[i][1] column change
+            int col = indices[i][1];
+            for(int j=0; j<m; j++){
+                mat[j][col] += 1;
+            }
+
+        }
+
+        //count odds
+        int count = 0;
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(mat[i][j] % 2 != 0) count++;
+            }
+        }
+
+        return count;
+
+    }
+};
