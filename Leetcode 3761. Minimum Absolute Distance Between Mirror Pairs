@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int reverse(int x){
+        int y=0;
+        while(x){
+            int z = x%10;
+            x /= 10;
+
+            y = y*10 + z;
+        }
+        return y;
+    }
+    int minMirrorPairDistance(vector<int>& nums) {
+        unordered_map<int, int> mp;
+        int ans=INT_MAX;
+        bool flag = false;
+        for (int i = 0; i < nums.size(); i++) {
+
+            if (mp.find(nums[i]) != mp.end()) {
+
+                ans = min(ans, i-mp[nums[i]]);
+                int x = reverse(nums[i]);
+                mp[x]=i;
+                flag = true;
+
+            } 
+
+            else {
+
+                int x = reverse(nums[i]);
+                mp[x]=i;
+
+            }
+        }
+        if(!flag) return -1;
+        return ans;
+    }
+};
