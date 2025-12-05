@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int count(int x,string s){
+        int fr = 0;
+        for(auto a : s){
+            if(a==x) fr++;
+        }
+        return fr;
+    }
+
+    vector<int> numSmallerByFrequency(vector<string>& queries, vector<string>& words) {
+        vector<int> ans;
+
+        for(int i=0; i<queries.size(); i++){
+            char s1 = *min_element(queries[i].begin(), queries[i].end());
+            int fr1 = count(s1,queries[i]);
+            int calc = 0;
+
+            for(int j=0; j<words.size(); j++){
+                char s2 = *min_element(words[j].begin(), words[j].end());
+                int fr2 = count(s2,words[j]);
+                if(fr1<fr2) calc++;
+            }
+
+            ans.push_back(calc);
+        }
+        
+        return ans;
+    }
+};
