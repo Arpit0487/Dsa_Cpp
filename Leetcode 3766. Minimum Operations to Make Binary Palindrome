@@ -1,0 +1,45 @@
+class Solution {
+public:
+    bool palindrome(long long x){
+        string s = "";
+        while(x>0){
+            s += (x&1)+'0';
+            x>>=1;
+        }
+        if(s.empty()) s = "0";
+        string r = s;
+        reverse(r.begin(),r.end());
+        return s==r;
+    }
+    vector<int> minOperations(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> ans(n);
+
+        for(int i=0; i<nums.size(); i++){
+            long long x = nums[i];
+
+            if(palindrome(x)){
+                ans[i]=0;
+                continue;
+            }
+
+            int d = 1;
+            while(true){
+                long long left = x - d;
+                long long right = x + d;
+
+                if(left>=0 && palindrome(left)){
+                    ans[i]=d;
+                    break;
+                }
+
+                if(palindrome(right)){
+                    ans[i] = d;
+                    break;
+                }
+                d++;
+            }
+        }
+        return ans;
+    }
+};
