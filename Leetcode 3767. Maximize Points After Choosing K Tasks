@@ -1,0 +1,29 @@
+class Solution {
+public:
+    long long maxPoints(vector<int>& technique1, vector<int>& technique2, int k) {
+        int n = technique1.size();
+
+        long long total = 0;
+
+        for(int i=0; i<n; i++){
+            total += technique1[i];
+        }
+
+        priority_queue<int> maxHeap;
+        for(int i=0; i<n; i++){
+            int gain = technique2[i] - technique1[i];
+            maxHeap.push(gain);
+        }
+
+        int changeable = n-k;
+
+        while(changeable-- && !maxHeap.empty()){
+            int best = maxHeap.top();
+            if(best>0) total += best;
+            else break;
+            maxHeap.pop();
+        }
+
+        return total;
+    }
+};
