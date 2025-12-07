@@ -1,0 +1,26 @@
+class Solution {
+public:
+    long long totalScore(int hp, vector<int>& damage, vector<int>& requirement) {
+        int n = damage.size();
+        vector<long long> pref(n + 1, 0);
+        for (int i = 1; i <= n; i++) {
+            pref[i] = pref[i - 1] + damage[i - 1];
+        }
+
+        long long ans = 0;
+
+        for (int i = 1; i <= n; i++) {
+            long long T = pref[i] + requirement[i - 1] - hp;
+
+            auto it = lower_bound(pref.begin(), pref.begin() + i, T);
+            if (it == pref.begin() + i) {
+                continue;
+            }
+
+            int t = int(it - pref.begin());
+            ans += (long long)(i - t);
+        }
+
+        return ans;
+    }
+};
