@@ -1,0 +1,82 @@
+class Solution {
+public:
+    int minDominoRotations(vector<int>& a, vector<int>& b) {
+        int n = a.size();
+
+        // check karo ki possible hai bhi ya nahi
+        int x = a[0], y = b[0];
+        bool okx = true, oky = true;
+
+        for (int i = 0; i < n; i++) {
+            if (a[i] != x && b[i] != x) okx = false;
+            if (a[i] != y && b[i] != y) oky = false;
+        }
+
+        if (!okx && !oky) return -1;
+
+        //yaha tak pahuch gye matlab possible hai solve karna
+        bool p = true;
+        int pc = 0;
+        bool q = true;
+        int qc = 0;
+        bool r = true;
+        int rc = 0;
+        bool s = true;
+        int sc = 0;
+
+        //check karo ki a[0] puri a me aasakta hai kya
+        for(int i=1; i<n; i++){
+            if(a[i]!=a[0]){
+                if(b[i]!=a[0]){
+                    p = false;
+                    break;
+                }
+                else pc++;
+            }
+        }
+
+        
+        //check karo ki a[0] puri b me aasakta hai kya
+        for(int i=0; i<n; i++){
+            if(b[i]!=a[0]){
+                if(a[i]!=a[0]){
+                    q = false;
+                    break;
+                }
+                else qc++;
+            }
+        }
+
+        
+        //check karo ki b[0] puri a me aasakta hai kya
+        for(int i=0; i<n; i++){
+            if(a[i]!=b[0]){
+                if(b[i]!=b[0]){
+                    r = false;
+                    break;
+                }
+                else rc++;
+            }
+        }
+
+        
+        //check karo ki b[0] puri b me aasakta hai kya
+        for(int i=1; i<n; i++){
+            if(b[i]!=b[0]){
+                if(a[i]!=b[0]){
+                    s = false;
+                    break;
+                }
+                else sc++;
+            }
+        }
+
+        int mini = INT_MAX;
+        if(p) mini = min(mini,pc);
+        if(q) mini = min(mini,qc);
+        if(r) mini = min(mini,rc);
+        if(s) mini = min(mini,sc);
+
+        return mini;
+    }
+};
