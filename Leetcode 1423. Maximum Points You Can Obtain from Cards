@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int maxScore(vector<int>& cardPoints, int k) {
+        int n = cardPoints.size();
+        
+        // take first k cards
+        int sum = 0;
+        for (int i = 0; i < k; i++) {
+            sum += cardPoints[i];
+        }
+        
+        int best = sum;
+        int front = k - 1;
+        int end = n - 1;
+
+        // replace front cards with end cards (one by one)
+        while (front >= 0) {
+            sum -= cardPoints[front];
+            sum += cardPoints[end];
+            best = max(best, sum);
+            front--;
+            end--;
+        }
+
+        return best;
+    }
+};
