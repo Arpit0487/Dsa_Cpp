@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int sortPermutation(vector<int>& nums) {
+        int k = -1;
+        int i = 0;
+        for(auto x : nums){
+            if(x != i){
+                k &= x;
+            }
+            i++;
+        }
+        if(k==-1) return 0;
+        return k;
+    }
+};
