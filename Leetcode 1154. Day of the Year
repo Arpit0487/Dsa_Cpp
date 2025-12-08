@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int dayOfYear(string date) {
+
+        vector<int> mahina(13);
+        mahina[1] = 31;
+        mahina[2] = 28;
+        mahina[3] = 31;
+        mahina[4] = 30;
+        mahina[5] = 31;
+        mahina[6] = 30;
+        mahina[7] = 31;
+        mahina[8] = 31;
+        mahina[9] = 30;
+        mahina[10] = 31;
+        mahina[11] = 30;
+        mahina[12] = 31;
+
+        int month = (date[5] - '0') * 10 + (date[6] - '0');
+
+        int day = (date[8] - '0') * 10 + (date[9] - '0');
+
+        int ans = 0;
+        for (int i = 1; i < month; i++) {
+            ans += mahina[i];
+        }
+
+        ans += day;
+
+        int year = 0;
+        for (int i = 0; i < 4; i++)
+            year = year * 10 + (date[i] - '0');
+
+        bool leap = false;
+        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+            leap = true;
+
+        if (leap && month > 2)
+            ans++;
+
+        return ans;
+    }
+};
