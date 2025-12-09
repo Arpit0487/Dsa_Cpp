@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool isVowel(char c){
+        return c=='a' || c=='e' || c=='i' || c=='o' || c=='u';
+    }
+
+    vector<int> vowelStrings(vector<string>& words, vector<vector<int>>& queries) {
+        
+        vector<int> idx;
+        
+        for(int i = 0; i < words.size(); i++){
+            if(isVowel(words[i][0]) && isVowel(words[i].back())){
+                idx.push_back(i);
+            }
+        }
+
+        vector<int> ans;
+
+        for(auto &q : queries){
+            int l = q[0];
+            int r = q[1];
+
+            auto it1 = lower_bound(idx.begin(), idx.end(), l);
+            auto it2 = upper_bound(idx.begin(), idx.end(), r);
+
+            int count = it2 - it1;
+            ans.push_back(count);
+        }
+
+        return ans;
+    }
+};
