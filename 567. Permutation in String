@@ -1,0 +1,38 @@
+class Solution {
+public:
+    bool checkInclusion(string a, string b) {
+        if (a.length() > b.length()) {
+            return false;
+        }
+        
+        unordered_map<char, int> aCount;
+        unordered_map<char, int> bCount;
+        
+        for (int i = 0; i < a.length(); i++) {
+            aCount[a[i]]++;
+            bCount[b[i]]++;
+        }
+        
+        if (aCount == bCount) {
+            return true;
+        }
+        
+        int left = 0;
+        for (int right = a.length(); right < b.length(); right++) {
+            bCount[b[right]]++;
+            bCount[b[left]]--;
+            
+            if (bCount[b[left]] == 0) {
+                bCount.erase(b[left]);
+            }
+            
+            left++;
+            
+            if (aCount == bCount) {
+                return true;
+            }
+        }
+        
+        return false;        
+    }
+};
