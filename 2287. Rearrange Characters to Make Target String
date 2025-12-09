@@ -1,0 +1,48 @@
+class Solution {
+public:
+    int rearrangeCharacters(string s, string target) {
+
+        // put all target chars in set
+        unordered_set<char> st;
+        unordered_map<char,int> req;
+
+        for(char c : target){
+            st.insert(c);
+            req[c]++;
+        }
+
+        // vector of pairs (char, required count)
+        vector<pair<char,int>> vec;
+        for(auto &p : req){
+            vec.push_back({p.first, p.second});
+        }
+
+        // count frequency of only those chars present in target
+        unordered_map<char,int> mp;
+        for(char c : s){
+            if(st.find(c) != st.end()){
+                mp[c]++;
+            }
+        }
+
+        // Now calculate how many complete target strings we can make
+        int mini = INT_MAX;
+
+        for(auto &p : vec){
+            char ch = p.first;
+            int need = p.second;
+
+            if(mp.find(ch) != mp.end()){
+                int ele = mp[ch];
+                int canMake = ele / need;
+                mini = min(mini,canMake);
+            } 
+            else {
+                // if any required char is completely missing, answer = 0
+                return 0;
+            }
+        }
+
+        return mini;
+    }
+};
