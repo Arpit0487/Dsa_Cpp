@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int maxNumberOfBalloons(string text) {
+        int mini = INT_MAX;
+        unordered_map<char,int> mp;
+        for(auto x : text){
+            if(x=='b' || x=='a' || x=='l' || x=='o' || x=='n') mp[x]++;
+        }
+        for(auto x : mp){
+            if(x.first == 'b' || x.first == 'a' || x.first == 'n'){
+                int ele = x.second;
+                mini = min(mini,ele/1);
+            }
+            else if(x.first == 'l' || x.first == 'o'){
+                int ele = x.second;
+                mini = min(mini,ele/2);
+            }
+        }
+        if(mp['b']>0 && mp['a']>0 && mp['l']>0 && mp['o']>0 && mp['n']>0) return mini;
+        return 0;
+    }
+};
