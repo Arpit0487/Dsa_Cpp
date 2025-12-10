@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int findPermutationDifference(string s, string t) {
+        unordered_map<char, int> posS, posT;
+
+        // Store indices for s
+        for (int i = 0; i < s.size(); i++) {
+            posS[s[i]] = i;
+        }
+
+        // Store indices for t
+        for (int i = 0; i < t.size(); i++) {
+            posT[t[i]] = i;
+        }
+
+        int diffSum = 0;
+
+        // Calculate permutation difference
+        for (auto &p : posS) {
+            char ch = p.first;
+            diffSum += abs(posS[ch] - posT[ch]);
+        }
+
+        return diffSum;
+    }
+};
