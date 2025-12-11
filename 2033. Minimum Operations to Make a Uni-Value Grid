@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int minOperations(vector<vector<int>>& grid, int x) {
+        vector<int> nums;
+        for(int i=0; i<grid.size(); i++){
+            for(int j=0; j<grid[i].size(); j++){
+                nums.push_back(grid[i][j]);
+            }
+        }
+        int n = nums.size();
+        int steps = 0;
+        sort(nums.begin(), nums.end());
+        int median = nums[n/2];
+        for(int i=0; i<n; i++){
+            int diff = abs(nums[i] - median);
+            if (diff % x != 0) return -1;
+            steps += diff / x;
+        }
+        return (int)steps;
+    }
+};
