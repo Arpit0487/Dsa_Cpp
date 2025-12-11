@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int specialTriplets(vector<int>& nums) {
+        unordered_map<int,int> front;
+        unordered_map<int,int> back;
+
+        long long count = 0;
+        int n = nums.size();
+        const int MOD = 1e9 + 7;
+        
+        //we will create a front and back map for j = 1;
+        for(int i=0; i<n; i++){
+            if(i==0) front[nums[i]]++;
+            else if(i==1) continue;
+            else back[nums[i]]++;
+        }
+
+        for(int i=1; i<n-1; i++){
+            //check karna hai kitne combinations possible hai for current j
+            int val = nums[i]*2;
+            if(front.count(val) && back.count(val)){
+                //possible hai
+                count += 1LL * front[val] * back[val] % MOD;
+            }
+            //possible nahi hai
+            //next j ke liye map update karo
+            front[nums[i]]++;
+            back[nums[i+1]]--;
+        }
+        return (int)(count % MOD);
+    }
+};
