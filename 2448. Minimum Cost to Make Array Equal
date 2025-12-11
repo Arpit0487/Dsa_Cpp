@@ -1,0 +1,30 @@
+class Solution {
+public:
+    long long minCost(vector<int>& nums, vector<int>& cost) {
+
+        long long sum = accumulate(cost.begin(), cost.end(), 0LL);
+        map<int, long long> mp;
+
+        for (int i = 0; i < nums.size(); i++) {
+            mp[nums[i]] += cost[i];
+        }
+
+        long long temp = 0;
+        long long median = 0;
+
+        for (auto& [num, w] : mp) {
+            temp += w;
+            if (temp > sum / 2) {
+                median = num;
+                break;
+            }
+        }
+
+        long long ans = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            ans += (long long)abs(nums[i] - median) * cost[i];
+        }
+
+        return ans;
+    }
+};
