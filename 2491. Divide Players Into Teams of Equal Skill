@@ -1,0 +1,18 @@
+class Solution {
+public:
+    long long dividePlayers(vector<int>& skill) {
+        sort(skill.begin(),skill.end());
+        int match = skill[0]+skill.back();
+        long long sum = 0;
+
+        int start = 0;
+        int end = skill.size()-1;
+        while(start<end){
+            if(skill[start]+skill[end]!=match) return -1;
+            sum += skill[start] * skill[end];
+            end--;
+            start++;
+        }
+        return sum;
+    }
+};
