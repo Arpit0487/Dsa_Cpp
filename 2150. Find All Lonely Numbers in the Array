@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<int> findLonely(vector<int>& nums) {
+        unordered_set<int> st;
+        unordered_map<int,int> freq;
+        vector<int> ans;
+
+        for(int x : nums){
+            st.insert(x);
+            freq[x]++;
+        }
+
+        for(int x : nums){
+            if(freq[x] == 1 && !st.count(x - 1) && !st.count(x + 1)){
+                ans.push_back(x);
+            }
+        }
+
+        return ans;
+    }
+};
