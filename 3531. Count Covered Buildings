@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int countCoveredBuildings(int n, vector<vector<int>>& nums) {
+
+        unordered_map<int, set<int>> row; // row -> sorted columns
+        unordered_map<int, set<int>> col; // col -> sorted rows
+
+        // fill sets
+        for (auto &x : nums) {
+            int a = x[0], b = x[1];
+            row[a].insert(b);
+            col[b].insert(a);
+        }
+
+        int count = 0;
+
+        for (auto &x : nums) {
+            int a = x[0], b = x[1];
+
+            // boundary buildings cannot be covered
+            if (a == 1 || a == n || b == 1 || b == n) continue;
+
+            // row check: left & right
+            auto it = row[a].find(b);
+            bool left  = (it != row[a].begin());                     // element before exists
+            bool right = (next(it) != row[a].end());                 // element after exists
+
+            // column check: up & down
+            auto it2 = col[b].find(a);
+            bool up   = (it2 != col[b].begin());
+            bool down = (next(it2) != col[b].end());
+
+            if (left && right && up && down)
+                count++;
+        }
+
+        return count;
+    }
+};
