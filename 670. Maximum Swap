@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int maximumSwap(int num) {
+        string s = to_string(num);
+        int n = s.size();
+
+        vector<int> rightMax(n);
+        rightMax[n - 1] = n - 1;   
+ 
+        for (int i = n - 2; i >= 0; i--) {
+            int rightIdx = rightMax[i + 1];
+ 
+            if (s[rightIdx] >= s[i]) {
+                rightMax[i] = rightIdx;
+            } 
+            else {
+                rightMax[i] = i;
+            }
+        }
+ 
+        for (int i = 0; i < n; i++) {
+            int bestRight = rightMax[i];
+ 
+            if (s[bestRight] > s[i]) {
+                swap(s[i], s[bestRight]);
+                return stoi(s);
+            }
+        }
+
+        return num; 
+    }
+};
