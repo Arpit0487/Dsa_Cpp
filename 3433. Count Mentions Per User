@@ -1,0 +1,71 @@
+class Solution {
+public:
+    vector<int> countMentions(int numberOfUsers, vector<vector<string>>& events) {
+        vector<int> ans(numberOfUsers, 0);
+        vector<bool> online(numberOfUsers, true);
+        vector<int> offlineStart(numberOfUsers, -1);
+
+        // Sort events by timestamp and the one with same time stamp sot them by offline first then message
+        sort(events.begin(), events.end(), [](const auto &a, const auto &b) {
+            int ta = stoi(a[1]), tb = stoi(b[1]);
+            //sorting on basis of timestamp
+            if (ta != tb) return ta < tb;
+            // offline > message
+            return a[0] > b[0];
+        });
+
+        for (const auto &e : events) {
+            string type = e[0];
+            int t = stoi(e[1]);
+            string data = e[2];
+
+            // id comes back online at offlineStart + 60
+            for (int id = 0; id < numberOfUsers; id++) {
+                if (!online[id] && t >= offlineStart[id] + 60) {
+                    online[id] = true;
+                    offlineStart[id] = -1;
+                }
+            }
+
+            if (type == "MESSAGE") {
+                if (data == "HERE") {
+                    // Mention++ all online users
+                    for (int id = 0; id < numberOfUsers; id++) {
+                        if (online[id]) ans[id]++;
+                    }
+                }
+                else if (data == "ALL") {
+                    // mention++ all users
+                    for (int id = 0; id < numberOfUsers; id++) {
+                        ans[id]++;
+                    }
+                }
+                else {
+                    // mention++ all given ids
+                    stringstream ss(data);
+                    string token;
+                    while (ss >> token) {
+                        // extracting id no
+                        if (token.substr(0, 2) == "id") {
+                            int id = stoi(token.substr(2));
+                            ans[id]++;
+                        }
+                    }
+                }
+            }
+            else {//setting ids to offline
+                int id;
+                if (data.substr(0, 2) == "id") {
+                    id = stoi(data.substr(2));
+                } else {
+                    id = stoi(data);
+                }
+                
+                online[id] = false;
+                offlineStart[id] = t;
+            }
+        }
+
+        return ans;
+    }
+};
