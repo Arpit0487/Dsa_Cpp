@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int findLongestChain(vector<vector<int>>& pairs) {
+
+        sort(pairs.begin(), pairs.end(), [](const vector<int>& pair1, const vector<int>& pair2) {
+            if(pair1[1] == pair2[1]) return pair1[0] < pair2[0];
+            return pair1[1] < pair2[1];
+        });
+        
+        int chainLength = 1;
+        int lastEnd = pairs[0][1];
+        
+        for(int i = 1; i < pairs.size(); i++) {
+            int currentStart = pairs[i][0];
+            int currentEnd = pairs[i][1];
+            
+            if(currentStart > lastEnd) {
+                chainLength++;
+                lastEnd = max(lastEnd, currentEnd);
+            }
+        }
+        
+        return chainLength;
+    }
+};
