@@ -1,0 +1,22 @@
+class Solution {
+public:
+    TreeNode* build(vector<int>& pre, int preLo, int preHi, vector<int>& post, int postLo, int postHi){
+        if(preLo>preHi) return nullptr;
+        TreeNode* root = new TreeNode(pre[preLo]);
+        if(preLo==preHi) return root;
+        int i = postLo;
+        while(i<postHi){
+            if(post[i]==pre[preLo+1]) break;
+            i++;
+        }
+        int LC = i-postLo+1;
+        int RC = postHi-i-1;
+        root->left = build(pre, preLo + 1, preHi-RC, post, postLo, i);
+        root->right = build(pre, preLo + LC + 1, preHi, post, i + 1, postHi - 1);
+        return root;
+    }
+    TreeNode* constructFromPrePost(vector<int>& pre, vector<int>& post) {
+        int n = pre.size();
+        return build(pre,0,n-1,post,0,n-1);
+    }
+};
