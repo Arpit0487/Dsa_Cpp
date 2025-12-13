@@ -1,0 +1,46 @@
+class Solution {
+public:
+    vector<string> validateCoupons(vector<string>& code, vector<string>& businessLine, vector<bool>& isActive) {
+        map<string,vector<string>> mp;
+        vector<string> ans;
+        int n = code.size();
+        
+        set<string> validBusinessLines = {"grocery", "electronics", "pharmacy", "restaurant"};
+        
+        for(int i=0; i<n; i++){
+            //check karna hai ki code[i] valid hai ya nahi
+            // check karna hai ki isActive[i] hai ya nahi
+            //agar sab hai to mp[businessLine[i]].push_back(code[i]);
+            
+            // Empty string check
+            if(code[i].empty()) continue;
+            
+            // Checking if businessLine is valid
+            if(validBusinessLines.find(businessLine[i]) == validBusinessLines.end()) continue;
+            
+            bool valid = true;
+            for(int j=0; j<code[i].length(); j++){
+                if(!((code[i][j]>='a' && code[i][j]<='z') || (code[i][j]>='A' && code[i][j]<='Z') || (code[i][j]>='0' && code[i][j]<='9') || code[i][j]=='_')) {
+                    valid = false;
+                    break;
+                }
+            }
+
+            if(isActive[i] && valid){  // Added valid check
+                mp[businessLine[i]].push_back(code[i]);
+            }
+        }
+        
+        // sort codes in businessLine
+        for(auto& x : mp){
+            sort(x.second.begin(), x.second.end());
+        }
+        
+        for(auto x : mp){
+            for(auto itr : x.second){
+                ans.push_back(itr);
+            }
+        }
+        return ans;
+    }
+};
