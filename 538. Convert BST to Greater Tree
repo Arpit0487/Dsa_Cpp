@@ -1,0 +1,45 @@
+class Solution {
+public:
+    void inorder(TreeNode* root, vector<int>& ans){
+        if(root==NULL) return;
+        inorder(root->left,ans);
+        ans.push_back(root->val);
+        inorder(root->right,ans);
+    }
+
+    int levels(TreeNode* root){
+        if(root == NULL) return 0;
+        return 1 + max(levels(root->left), levels(root->right));
+    };
+
+    void display_particular_level(TreeNode* &root, int current, int level, vector<int> ans){
+        if(root == NULL) return;
+        if(current == level){
+            int count = 0;
+            bool found = false;
+            for(int i = 0; i < ans.size(); i++){
+                if(ans[i] >= root->val) {
+                    count += ans[i];
+                    found = true;
+                }
+            }
+            if(found) root->val = count;
+            return;
+        }
+        display_particular_level(root->left, current+1, level, ans);
+        display_particular_level(root->right, current+1, level, ans);
+    };
+
+    void levelOrder(TreeNode* &root, vector<int> ans){
+        int n = levels(root);
+        for(int i=1; i<=n; i++){
+            display_particular_level(root,1,i,ans);
+        };
+    };
+    TreeNode* convertBST(TreeNode* root) {
+        vector<int> ans;
+        inorder(root,ans);
+        levelOrder(root,ans);
+        return root;
+    }
+};
