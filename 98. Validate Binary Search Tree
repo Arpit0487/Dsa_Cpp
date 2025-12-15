@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool flag=true;
+    TreeNode* prev = NULL;
+    void inOrder(TreeNode* root){
+        if(root==NULL) return;
+        inOrder(root->left);
+        if(prev){
+            if(root->val <= prev->val){
+                flag=false;
+                return;
+            }
+        }
+        prev=root;
+        inOrder(root->right);
+    }
+    bool isValidBST(TreeNode* root) {
+        inOrder(root);
+        return flag;
+    }
+};
