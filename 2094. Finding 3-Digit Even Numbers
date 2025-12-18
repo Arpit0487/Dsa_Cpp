@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int> findEvenNumbers(vector<int>& digits) {
+        map<int,int> count;
+        vector<int> ans;
+        for (int d : digits) {
+            count[d]++;
+        }
+        for(int i=100; i<999; i+=2){
+            int x=i;
+            int a = x%10;
+            x/=10;
+            int b = x%10;
+            x/=10;
+            int c = x;
+            if(count.find(a)!=count.end()){
+                count[a]--;
+                if(count[a]==0) count.erase(a);
+                if(count.find(b)!=count.end()){
+                    count[b]--;
+                    if(count[b]==0) count.erase(b);
+                    if(count.find(c)!=count.end()) ans.push_back(i);
+                    count[b]++;
+                }
+                count[a]++;
+            }
+        }
+        return ans;
+    }
+};
