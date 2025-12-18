@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<ListNode*> splitListToParts(ListNode* root, int k) {
+        vector<ListNode*> parts(k, nullptr);
+        int len = 0;
+        ListNode* count = root;
+        while(count!=NULL){
+            len++;
+            count=count->next;
+        }
+        int n = len / k;
+        int r = len % k;
+        ListNode* node = root;
+        ListNode* prev = NULL;
+        for (int i = 0; node && i < k; i++, r--) {
+            parts[i] = node;
+            for (int j = 0; j < n + (r > 0); j++) {
+                prev = node;
+                node = node->next;
+            }
+            prev->next = nullptr;
+        }
+        return parts;
+    }
+};
