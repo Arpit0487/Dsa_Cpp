@@ -1,0 +1,74 @@
+class Solution {
+public:
+    TreeNode* first = NULL;
+    void find(TreeNode* root, int start){
+        //find karo ki vo value wala infected node kaha par hai
+        if(root==NULL) return;
+        if(root->val==start) {
+            first=root;
+            return;
+        }
+        find(root->left,start);
+        find(root->right,start);
+    };
+    void fillParent(TreeNode* root, unordered_map<TreeNode*, TreeNode*>& parent){
+        //hash map fill karo jo child aur parent ka relation ka data store karega 
+        if(root==NULL) return;
+        if(root->left){
+            parent[root->left] = root;
+            fillParent(root->left,parent);
+        }
+        if(root->right){
+            parent[root->right] = root;
+            fillParent(root->right,parent);
+        }
+    };
+    int amountOfTime(TreeNode* root, int start) {
+        find(root,start);
+        unordered_map<TreeNode*, TreeNode*> parent;
+        fillParent(root,parent);
+        unordered_set<TreeNode*> infected;
+        infected.insert(first);
+        //BFS apply karna hai to ek queue bnani padegi
+        queue<pair<TreeNode*, int>> work;
+        work.push({first,0}); //queue me first infected node aur zero level push kardo
+        int maxTime=0; // maximum levels(time) calculate karne ke liye 
+        while(work.size()>0){
+            pair<TreeNode*,int> p = work.front();
+            TreeNode* temp = p.first;
+            int level = p.second;
+            maxTime = max(maxTime, level);
+            //check karo ki q.front ka left hai kya 
+            //agar hai to check karo infected to nhi hai?
+            //agar infected nhi hai to usko infected set me daal ke infected mark kar do
+            //aur queue me left aur 1+ level push kar do
+            //similarly for root->right
+            if(temp->left!=NULL){
+                if(infected.find(temp->left)==infected.end()){
+                    work.push({temp->left,level+1});
+                    infected.insert(temp->left);
+                }
+            }
+            if(temp->right!=NULL){
+                if(infected.find(temp->right)==infected.end()){
+                    work.push({temp->right,level+1});
+                    infected.insert(temp->right);
+                }
+            }
+            //check karo root ka parent hai kya
+            //agar hai to check karo infected to nhi hai na
+            //agar infected nhi hai to set me push kar ke infected mark kar do 
+            //aur queue me push kar do parent aur 1+ level
+            if(parent.find(temp)!=parent.end()){
+                if(infected.find(parent[temp]) == infected.end()){
+                    infected.insert(parent[temp]);
+                    work.push({parent[temp],level+1});
+                }
+            }
+            //pop kar do front element
+            work.pop();
+        }
+        //maximum level return kardo
+        return maxTime;
+    }
+};
