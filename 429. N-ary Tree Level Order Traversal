@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int levels(Node* root) {
+        if (root == NULL)
+            return 0;
+
+        int h = 0;
+        for (auto child : root->children) {
+            h = max(h, levels(child));
+        }
+        return 1 + h;
+    }
+
+    void lOrder(Node* root, vector<vector<int>>& ans, int level) {
+        if (root == NULL)
+            return;
+
+        ans[level].push_back(root->val);
+        for (auto child : root->children) {
+            lOrder(child, ans, level + 1);
+        }
+    }
+
+    vector<vector<int>> levelOrder(Node* root) {
+        int n = levels(root);
+        vector<vector<int>> ans(n);
+        lOrder(root, ans, 0);
+        return ans;
+    }
+};
