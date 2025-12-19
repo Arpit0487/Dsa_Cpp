@@ -1,0 +1,29 @@
+class Solution {
+public:
+    string subtract(string sub, string s){
+        size_t pos = s.find(sub);
+        if (pos != string::npos) {
+            s.erase(pos, sub.length());
+        }
+        return s;
+    }
+
+    int numOfPairs(vector<string>& nums, string target) {
+
+        unordered_map<string,int> mp;
+        for(auto x : nums) mp[x]++;
+
+        int count = 0;
+        for(int i=0; i<nums.size(); i++){
+
+            if (target.find(nums[i]) != 0) continue;
+            string sub = subtract(nums[i],target);
+            bool flag = false;
+            if(sub==nums[i]) flag=true;
+            if(mp.count(sub)) count += mp[sub];
+            if(flag) count--;
+        }
+        
+        return count;
+    }
+};
