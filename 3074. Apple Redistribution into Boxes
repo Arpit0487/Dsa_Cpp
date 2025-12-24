@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int minimumBoxes(vector<int>& apple, vector<int>& capacity) {
+        int count = 0;
+        priority_queue<int> pq;
+        for(auto x : capacity){
+            pq.push(x);
+        }
+        int total = 0;
+        for(auto x : apple){
+            total+=x;
+        }
+        while(!pq.empty()){
+            total -= pq.top();
+            count++;
+            if(total<=0) break;
+            pq.pop();
+        }
+        return count;
+    }
+};
