@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<string> findAllRecipes(vector<string>& recipes, vector<vector<string>>& ingredients, vector<string>& supplies) {
+
+        // supplies ka ek alag set bna lo O(1) me search karne ke liye
+        //recipes pe iterate karo
+        //har ke recipe ke ingredients set me check karo 
+
+        unordered_set<string> st;
+        for(auto &x : supplies) st.insert(x);
+
+        vector<string> ans;
+        bool added = true;
+
+        while(added) {
+            added = false;
+
+            for(int i = 0; i < recipes.size(); i++) {
+                // skip if already made
+                if(st.find(recipes[i]) != st.end()) continue;
+
+                bool flag = true;
+                for(int j = 0; j < ingredients[i].size(); j++) {
+                    if(st.find(ingredients[i][j]) == st.end()) {
+                        flag = false;
+                        break;
+                    }
+                }
+
+                if(flag) {
+                    ans.push_back(recipes[i]);
+                    st.insert(recipes[i]);
+                    added = true;
+                }
+            }
+        }
+
+        return ans;
+    }
+};
