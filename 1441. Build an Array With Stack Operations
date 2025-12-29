@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<string> buildArray(vector<int>& target, int n) {
+        // ek set banao jo ki target store karege O(1) me search karne ke kaam aayega
+        //loop chalao 1 se n tak
+        // check karte jao ki set me ye val present hai ya nahi
+        // present hai to push kar do nahi hai to push fir pop
+        // aur fir set me se vo value remove kar do
+        // jab set khali ho jaye pura matlab apna target compelete ho gya
+        // vector of string return kar do
+
+        unordered_set<int> st;
+        for(auto x : target) st.insert(x);
+
+        vector<string> ans;
+        for(int i=1; i<=n; i++){
+            if(st.find(i)!=st.end()){
+                ans.push_back("Push");
+                st.erase(i);
+            } 
+            else if(st.empty()) break;
+            else{
+                ans.push_back("Push");
+                ans.push_back("Pop");
+            }
+        }
+        return ans;
+
+    }
+};
