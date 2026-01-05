@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int minLengthAfterRemovals(vector<int>& nums) {
+
+        int front = nums.size()/2;
+        if(nums.size()%2==1) front++;
+        int back = 0;
+        int k = 0;
+        while(front<nums.size()){
+            if(nums[back]<nums[front]) k++;
+            front++;
+            back++;
+        }
+        return nums.size()-2*k;
+    }
+};
