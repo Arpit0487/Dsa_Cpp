@@ -1,0 +1,48 @@
+class Solution {
+public:
+    int maxLevelSum(TreeNode* root) {
+        vector<vector<int>> levels;
+        int msum = INT_MIN; 
+        
+        queue<TreeNode*> q;
+        q.push(root);
+        q.push(NULL);
+        
+        vector<int> small; 
+        
+        while(!q.empty()){
+            TreeNode* front = q.front();
+            q.pop();
+            
+            if(front == nullptr){
+                if(!small.empty()) { 
+                    levels.push_back(small);
+                    small.clear(); 
+                }
+                
+                if(!q.empty()){
+                    q.push(nullptr);
+                }
+            }
+            else{
+                small.push_back(front->val);
+                if(front->left){
+                    q.push(front->left); 
+                }
+                if(front->right){
+                    q.push(front->right); 
+                }
+            }
+        }
+        
+        int maxSum = INT_MIN, level = 1;
+        for(int i = 0; i < levels.size(); i++) { 
+            int sum = accumulate(levels[i].begin(), levels[i].end(), 0); 
+            if(sum > maxSum) {
+                maxSum = sum;
+                level = i + 1;
+            }
+        }
+        return level; 
+    }
+};
