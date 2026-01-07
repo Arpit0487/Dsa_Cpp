@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+
+        //check karo first maximum window from starting in which there are only k more different elements from the popular one 
+        //sabki frequency store karke rakhni hai 
+        //start aur end pointer aage badhate jane hai jab tak popular character greater then or equal to maxCount na ho jaye
+        //maxCount count of characters maximum in current window
+        //if popular char count increase kar jata hai to again window ki size increase karte raho until its invalid
+        //return size of window at the end
+
+        vector<int> freq(26, 0);   // sabki frequency store karenge
+        int start = 0;
+        int maxCount = 0;          // popular character count
+        int ans = 0;
+
+        for (int end = 0; end < s.size(); end++) {
+            freq[s[end] - 'A']++;
+            
+            // popular character ka count update
+            maxCount = max(maxCount, freq[s[end] - 'A']);
+
+            // agar window invalid ho jaye
+            while ((end - start + 1) - maxCount > k) {
+                freq[s[start] - 'A']--;
+                start++;
+            }
+
+            // valid window ka size
+            ans = max(ans, end - start + 1);
+        }
+
+        return ans;
+    }
+};
