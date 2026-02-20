@@ -1,0 +1,30 @@
+class Solution {
+public:
+    string thousandSeparator(int n) {
+        if(n == 0) return "0";
+
+        stack<char> st;
+        int count = 0;
+
+        while(n){
+            int last = n % 10;
+            st.push(last + '0');
+            n /= 10;
+            count++;
+
+            if(count == 3){
+                st.push('.');
+                count = 0;
+            }
+        }
+
+        if(st.top()=='.') st.pop();
+
+        string ans = "";
+        while(!st.empty()){
+            ans.push_back(st.top());
+            st.pop();
+        }
+        return ans;
+    }
+};
