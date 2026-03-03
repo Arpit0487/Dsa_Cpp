@@ -12,6 +12,7 @@ public:
             }
             else{
                 m[nums[i]] = i;
+
             }
 
         }
