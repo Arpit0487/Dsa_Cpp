@@ -1,0 +1,9 @@
+class Solution {
+public:
+    bool checkOnesSegment(string s) {
+        string copy = s;
+        sort(copy.rbegin(),copy.rend());
+        if(copy==s) return true;
+        return false;
+    }
+};
