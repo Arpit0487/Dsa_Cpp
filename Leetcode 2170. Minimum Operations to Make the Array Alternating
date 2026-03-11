@@ -1,0 +1,48 @@
+class Solution {
+public:
+    int minimumOperations(vector<int>& nums) {
+        unordered_map<int,int> ods;
+        unordered_map<int,int> even;
+
+        for(int i=0; i<nums.size(); i++){
+            if(i%2==0) ods[nums[i]]++;
+            else even[nums[i]]++;
+        }
+
+        int oddMax1=0, oddMax2=0, oddVal=-1;
+        for(auto &p: ods){
+            if(p.second > oddMax1){
+                oddMax2 = oddMax1;
+                oddMax1 = p.second;
+                oddVal = p.first;
+            }
+            else if(p.second > oddMax2){
+                oddMax2 = p.second;
+            }
+        }
+
+        int evenMax1=0, evenMax2=0, evenVal=-1;
+        for(auto &p: even){
+            if(p.second > evenMax1){
+                evenMax2 = evenMax1;
+                evenMax1 = p.second;
+                evenVal = p.first;
+            }
+            else if(p.second > evenMax2){
+                evenMax2 = p.second;
+            }
+        }
+
+        int evenCount = nums.size()/2;
+        int oddCount = (nums.size()+1)/2;
+
+        if(oddVal != evenVal){
+            return (oddCount - oddMax1) + (evenCount - evenMax1);
+        }
+
+        return min(
+            (oddCount - oddMax1) + (evenCount - evenMax2),
+            (oddCount - oddMax2) + (evenCount - evenMax1)
+        );
+    }
+};
