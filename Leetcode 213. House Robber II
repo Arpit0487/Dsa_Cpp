@@ -1,0 +1,19 @@
+class Solution {
+public:
+    //recursion + memoization approach
+    int maxAmt(vector<int> nums, int i, vector<int>& dp){
+        if(i>=nums.size()) return 0;
+        if(dp[i]!=-1) return dp[i];
+        int skip = maxAmt(nums,i+1,dp);
+        int take = maxAmt(nums,i+2,dp) + nums[i];
+        return dp[i] = max(skip,take);
+    }
+    int rob(vector<int>& nums) {
+        if(nums.size()==1) return nums[0];
+        vector<int> dp1(nums.size(),-1);
+        vector<int> dp2(nums.size(),-1);
+        vector<int> a(nums.begin(),nums.end()-1);
+        vector<int> b(nums.begin()+1,nums.end());
+        return max(maxAmt(a,0,dp1),maxAmt(b,0,dp2));
+    }
+};
