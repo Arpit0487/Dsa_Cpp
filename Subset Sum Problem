@@ -1,0 +1,19 @@
+class Solution {
+  public:
+    vector<vector<int>> dp;
+    
+    bool helper(int idx, int sum, vector<int>& arr) {
+        if (sum == 0) return true;
+        if (idx >= arr.size()) return false;
+        if (dp[idx][sum] != -1) return dp[idx][sum];
+        if (arr[idx] <= sum) {
+            if (helper(idx + 1, sum - arr[idx], arr)) return dp[idx][sum] = true;
+        }
+        return dp[idx][sum] = helper(idx + 1, sum, arr);
+    }
+
+    bool isSubsetSum(vector<int>& arr, int sum) {
+        dp.assign(arr.size(), vector<int>(sum + 1, -1));
+        return helper(0, sum, arr);
+    }
+};
