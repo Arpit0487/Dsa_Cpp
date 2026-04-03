@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool areSimilar(vector<vector<int>>& mat, int k) {
+        if(k%mat[0].size()==0) return true;
+        k=k%mat[0].size();
+        for(int i=0; i<mat.size(); i++){
+            for(int j=0; j<mat[i].size(); j++){
+                int idx;
+                if(i%2==0){
+                    //even
+                    idx = (j+k)%mat[i].size();
+                }
+                else{
+                    //odd
+                    idx = (j - k + mat[i].size()) % mat[i].size();
+                }
+                if(mat[i][j]!=mat[i][idx]) return false;
+            }
+        }
+        return true;
+    }
+};
