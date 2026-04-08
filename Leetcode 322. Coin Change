@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<vector<long>> dp;
+    long helper(int i, vector<int>& coins, int amount){
+        if(i==coins.size()){
+            if(amount==0) return 0;
+            else return INT_MAX;
+        }
+        if(dp[i][amount]!=-1) return dp[i][amount];
+        long skip = helper(i+1,coins,amount);
+        if(coins[i]>amount) return skip;
+        long take = 1 + helper(i,coins,amount-coins[i]);
+        return dp[i][amount] = min(take,skip);
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        dp.assign(coins.size(), vector<long>(amount + 1, -1));
+        int ans = helper(0,coins,amount);
+        if(ans==INT_MAX) return -1;
+        return ans;
+    }
+};
