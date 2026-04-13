@@ -12,6 +12,7 @@ public:
                 break;
             i++;
         }
+
         int LC = i - inLo;
         int RC = inHi - i;
         root->left = build(in, inLo, i - 1, post, postLo, postHi - RC - 1);
