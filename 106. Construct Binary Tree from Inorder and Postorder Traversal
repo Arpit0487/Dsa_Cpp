@@ -12,6 +12,7 @@ public:
             if (in[i] == post[postHi])
                 break;
             i++;
+
         }
 
         int LC = i - inLo;
