@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int longestCommonSubsequence(string& text1, string& text2) {
+        int m = text1.length();
+        int n = text2.length();
+        vector<vector<int>> dp(m+1, vector<int>(n+1, 0));
+
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                int p = (i > 0 && j > 0) ? dp[i-1][j-1] : 0;
+                int q = (j > 0) ? dp[i][j-1] : 0;
+                int r = (i > 0) ? dp[i-1][j] : 0;
+
+                if(text1[i] == text2[j]) dp[i][j] = 1 + p;
+                else dp[i][j] = max(q, r);
+            }
+        }
+
+     //just to print the subsequence
+
+        string str = "";
+        int i = m - 1;
+        int j = n - 1;
+
+        while(i >= 0 && j >= 0){
+            if(text1[i] == text2[j]){
+                str.push_back(text1[i]);
+                i--;
+                j--;
+            }
+            else if(dp[i-1][j]>dp[i][j-1]) i--;
+            else j--;
+        }
+
+        reverse(str.begin(), str.end());
+        cout << str << endl;
+
+        return dp[m-1][n-1];
+    }
+};
