@@ -1,0 +1,23 @@
+#define ll long long
+class Solution {
+public:
+    int minLength(vector<int>& nums, int k) {
+        map<ll, ll> mp;
+        ll l = 0;
+        ll sum = 0, ans = 1e6;
+        for (ll r = 0; r < nums.size(); r++) {
+            if (mp[nums[r]] == 0) {
+                sum += nums[r];
+            }
+            mp[nums[r]] += 1;
+
+            while (sum >= k && l <= r && mp[nums[l]] >= 1) {
+                ans = min(ans, r - l + 1);
+                if (mp[nums[l]] == 1)
+                    sum -= nums[l];
+                mp[nums[l++]]--;
+            }
+        }
+        return (ans == 1e6 ? -1 : ans);
+    }
+};
