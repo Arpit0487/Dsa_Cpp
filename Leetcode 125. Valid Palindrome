@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        int start = 0;
+        int end = s.length()-1;
+
+        while(start <= end){
+            char a, b;
+            if((s[start] >= 65 && s[start] <= 90) || 
+               (s[start] >= 97 && s[start] <= 122)){
+                a = tolower(s[start]);
+            }
+            else if((s[start] >= 48 && s[start] <= 57)) a = s[start];
+            else{
+                start++;
+                continue;
+            }
+
+            if((s[end] >= 65 && s[end] <= 90) || 
+               (s[end] >= 97 && s[end] <= 122)){
+                b = tolower(s[end]);
+            }
+            else if((s[end] >= 48 && s[end] <= 57)) b = s[end];
+            else{
+                end--;
+                continue;
+            }
+
+            if(a != b) return false;
+
+            start++;
+            end--;
+        }
+
+        return true;
+    }
+};
