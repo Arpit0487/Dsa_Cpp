@@ -1,0 +1,39 @@
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+        //find mid
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast->next && fast->next->next){
+            slow = slow ->next;
+            fast = fast->next->next;
+        }
+
+        ListNode* mid = slow->next;
+        slow->next = nullptr;
+
+        //reverse second half
+        ListNode* prev = nullptr;
+        while(mid){
+            ListNode* nextNode = mid->next;
+            mid->next = prev;
+            prev = mid;
+            mid = nextNode;
+        }
+
+        // merge both
+        ListNode* first = head;
+        mid = prev;
+        while(mid){
+            ListNode* temp1 = first->next;
+            ListNode* temp2 = mid->next;
+
+            first->next = mid;
+            mid->next = temp1;
+
+            first = temp1;
+            mid = temp2;
+        }
+
+    }
+};
