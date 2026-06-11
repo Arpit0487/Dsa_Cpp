@@ -1,0 +1,24 @@
+class Solution {
+public:
+    void push(vector<int>& ans, int num, int times){
+        while(times--){
+            ans.push_back(num);
+        }
+    }
+    vector<int> limitOccurrences(vector<int>& nums, int k) {
+        map<int,int> mp;
+        vector<int> ans;
+        for(auto x : nums) mp[x]++;
+        for(auto x : mp){
+            if(x.second>=k){
+                //k times push kar do
+                push(ans,x.first,k);
+            }else{
+                //x.second times push kar do
+                push(ans,x.first,x.second);
+            }
+        }
+        //sort(ans.begin(),ans.end());
+        return ans;
+    }
+};
