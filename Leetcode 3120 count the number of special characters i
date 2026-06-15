@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int numberOfSpecialChars(string word) {
+        unordered_map<char,int> mp;
+        unordered_set<char> st;
+        int count = 0;
+        for(auto x: word){
+            if(97<=x && x<=122) mp[x]++;
+        }
+        for(auto x: word){
+            if((65<=x && x<=90) && (mp.find(tolower(x))!=mp.end())){
+                if(mp[tolower(x)] > 0){
+                    if(st.find(x)!=st.end()) continue;
+                    else{
+                        mp[tolower(x)]--;
+                        count++;
+                        st.insert(x);
+                    }
+                }
+            }
+        }
+        return count;
+    }
+};
