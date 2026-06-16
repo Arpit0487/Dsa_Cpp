@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int numberOfSpecialChars(string word) {
+        int n = word.size();
+
+        //storing first capital occourance of char & its index
+        unordered_map<char,int> FCA; 
+        for(int i=n-1; i>=0; i--){
+            if(word[i]>=65 && word[i]<=90){
+                FCA[word[i]] = i;
+            }
+        }
+
+        //storing all indices of small letters seperately
+        vector<vector<int>> small(26);
+        for(int i=0; i<n; i++){
+            if((word[i]>=97 && word[i]<=122) && FCA.find(toupper(word[i]))!=FCA.end()){
+                small[word[i]-'a'].push_back(i);
+            }
+        }
+
+        int count=0;
+        for(int i=0; i<=25; i++){
+            if(small[i].empty()) continue;
+            bool flag = true;
+            int fca = FCA[char(65+i)];
+            for(int j=0; j<small[i].size(); j++){
+                if(small[i][j]>fca){
+                    flag=false;
+                    break;
+                }
+            }
+            if(flag) count++;
+        }
+
+        return count;
+    }
+};
