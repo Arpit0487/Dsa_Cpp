@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int maxSumTwoNoOverlap(vector<int>& nums, int firstLen, int secondLen) {
+        int sum1 = 0;
+        vector<int> arr1;
+        for(int i=0; i<nums.size(); i++){
+            if(i<firstLen){
+                sum1+=nums[i];
+                if(i+1==firstLen) arr1.push_back(sum1);
+                continue;
+            }
+            sum1-=nums[i-firstLen];
+            sum1+=nums[i];
+            arr1.push_back(sum1);
+        }
+
+        int sum2 = 0;
+        vector<int> arr2;
+        for(int i=0; i<nums.size(); i++){
+            if(i<secondLen){
+                sum2+=nums[i];
+                if(i+1==secondLen) arr2.push_back(sum2);
+                continue;
+            }
+            sum2-=nums[i-secondLen];
+            sum2+=nums[i];
+            arr2.push_back(sum2);
+        }
+
+        int maxi = 0;
+        for(int i=0; i<arr1.size(); i++){
+            int x = i + firstLen - 1;
+            int currmax = 0;
+            for(int j=0; j<arr2.size(); j++){
+                if(j + secondLen > i && j <= x) continue;
+                currmax = max(currmax,arr2[j]);
+            }
+            maxi = max(maxi,arr1[i]+currmax);
+        }
+
+        return maxi;
+    }
+};
