@@ -1,0 +1,22 @@
+class Solution {
+public:
+    string dtoc(int n){
+        if(n==0) return "0";
+        string binary = "";
+        while(n>0){
+            binary += (n%2)+'0';
+            n/=2;
+        }
+        reverse(binary.begin(),binary.end());
+        return binary;
+    }
+    bool consecutiveSetBits(int n) {
+        string bnr = dtoc(n);
+        int count = 0;
+        for(int i=0; i<bnr.size()-1; i++){
+            if(bnr[i] == '1' && bnr[i+1]=='1') count++;
+        }
+        if(count==1) return true;
+        return false;
+    }
+};
