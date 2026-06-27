@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<string> ans;
+    void helper(int idx, int n, int k, string& a, int cost){
+        if(cost>k) return;
+        if(idx==n){
+            ans.push_back(a);
+            return;
+        }
+        a.push_back('0');
+        helper(idx+1,n,k,a,cost);
+        a.pop_back();
+
+        if(idx==0||a.back()!='1'){
+            a.push_back('1');
+            helper(idx+1,n,k,a,cost+idx);
+            a.pop_back();
+        }
+        
+    }
+    vector<string> generateValidStrings(int n, int k) {
+        string a ="";
+        helper(0,n,k,a,0);
+        return ans;
+    }
+};
