@@ -1,0 +1,38 @@
+class Solution {
+public:
+    long long maximumSum(vector<int>& nums, int m, int l, int r) {
+        int n = nums.size();
+
+        vector<long long> prev(n + 1, 0);
+        for (int i = 0; i < n; i++) {
+            prev[i + 1] = prev[i] + nums[i];
+        }
+
+        const long long negative = -(long long)4e18;
+        vector<long long> pre(n + 1, 0);
+        long long ans = negative;
+
+        for (int j = 1; j <= m; j++) {
+            vector<long long> dp(n + 1, negative);
+            multiset<long long> mset;
+
+            for (int i = 1; i <= n; i++) {
+                int plus = i - l;
+                if (plus >= 0)
+                    mset.insert(pre[plus] - prev[plus]);
+
+                int rem = i - r - 1;
+                if (rem >= 0)
+                    mset.erase(mset.find(pre[rem] - prev[rem]));
+                dp[i] = dp[i - 1];
+                if (!mset.empty()) {
+                    dp[i] = max(dp[i], prev[i] + *mset.rbegin());
+                }
+                ans = max(ans, dp[i]);
+            }
+
+            pre.swap(dp);
+        }
+        return ans;
+    }
+};
