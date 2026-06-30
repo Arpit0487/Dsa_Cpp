@@ -26,6 +26,7 @@ public:
                     found = true;
                 }
             }
+
             if(found) root->val = count;
             return;
         }
