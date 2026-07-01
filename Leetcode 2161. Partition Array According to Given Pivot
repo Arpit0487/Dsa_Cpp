@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> pivotArray(vector<int>& nums, int pivot) {
+        vector<int> ans;
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> big;
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> small;
+        int count = 0;
+        for(int i=0; i<nums.size(); i++){
+            if(nums[i] > pivot) big.push({i,nums[i]});
+            else if(nums[i] < pivot) small.push({i,nums[i]});
+            else count++;
+        }
+
+        while(!small.empty()){
+            ans.push_back(small.top().second);
+            small.pop();
+        }
+
+        while(count--) ans.push_back(pivot);
+
+        while(!big.empty()){
+            ans.push_back(big.top().second);
+            big.pop();
+        }
+
+        return ans;
+    }
+};
