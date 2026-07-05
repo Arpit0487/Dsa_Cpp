@@ -15,6 +15,7 @@ public:
             count++;
             if(total<=0) break;
             pq.pop();
+
         }
         return count;
     }
