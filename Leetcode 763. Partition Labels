@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<int> partitionLabels(string s) {
+        unordered_map<char,int> freq;
+        for(char c : s) freq[c]++;
+
+        unordered_set<char> st;
+        vector<int> ans;
+
+        int len = 0;
+
+        for(char c : s) {
+            st.insert(c);
+
+            freq[c]--;
+            if(freq[c] == 0)
+                st.erase(c);
+
+            len++;
+
+            if(st.empty()) {
+                ans.push_back(len);
+                len = 0;
+            }
+        }
+
+        return ans;
+    }
+};
