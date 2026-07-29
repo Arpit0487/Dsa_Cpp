@@ -1,0 +1,11 @@
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        priority_queue<int> pq;
+        for(auto s : nums) pq.push(s);
+        int max = pq.top();
+        pq.pop();
+        int secondMax = pq.top();
+        return (max-1)*(secondMax-1);
+    }
+};
