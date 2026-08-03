@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int globalMax = INT_MIN;
+        int currMax = 1;
+        int currMin = 1;
+        for(auto x : nums){
+            if(x<0) swap(currMax, currMin);
+            currMax = max(x,currMax*x);
+            currMin = min(x,currMin*x);
+
+            globalMax = max(globalMax,currMax);
+        }
+
+        return globalMax;
+    }
+};
