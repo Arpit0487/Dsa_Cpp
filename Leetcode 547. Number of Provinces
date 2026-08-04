@@ -1,0 +1,42 @@
+class Solution {
+public:
+    void dfs(vector<vector<int>>& isConnected, int about, int n, vector<int>& visited){
+        queue<int> q;
+        //queue to track that which node came in current province till now
+        //we have to traverse each node which came under current province
+        q.push(about);
+        visited[about] = 1; // marking it visited
+        while(!q.empty()){
+            int curr = q.front();
+            q.pop();
+            //checking for each node in graph that with that node edge exists or not
+            for(int i=0; i<n; i++){
+                if(isConnected[curr][i] && !visited[i]){
+                    //if exists and not visited mark it visited and push in q for further traversal
+                    visited[i] = 1;
+                    q.push(i);
+                }
+            }
+        }
+    };
+
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size();
+        //visited array to check that is is visited or not 
+        //meaning that it came in any province till now or not
+        vector<int> visited(n,0);
+        int count = 0;
+
+        //calling dfs for each one in array if it is not visited
+        //if it is not visited it mean that it is not covered in any province till now
+        for(int i=0; i<n; i++){
+            if(!visited[i]){
+                count++;
+                //calling dfs for only those which are not marked visited
+                dfs(isConnected,i,n,visited);
+                visited[i]=1;
+            }
+        }
+        return count;
+    }
+};
